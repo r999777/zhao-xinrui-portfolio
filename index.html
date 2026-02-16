@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>赵鑫瑞 | 个人主页</title>
+<link rel="preconnect" href="https://cdn.bootcdn.net" crossorigin>
+<link href="https://cdn.bootcdn.net/ajax/libs/fontsource-noto-sans-sc/4.5.12/400.min.css" rel="stylesheet">
+<link href="https://cdn.bootcdn.net/ajax/libs/fontsource-noto-sans-sc/4.5.12/700.min.css" rel="stylesheet">
+<style>
+/* ========== CSS Variables ========== */
+:root {
+  --blue-light: #E8F4FD;
+  --yellow-light: #FFF9E6;
+  --blue-accent: #4A90D9;
+  --yellow-warm: #D4A843;
+  --text-dark: #1A2A3A;
+  --text-body: #3D4F5F;
+  --text-muted: #7A8B9C;
+  --card-bg: #FFFFFF;
+  --footer-bg: #1A2A3A;
+  --nav-height: 64px;
+  --serif: 'Georgia', 'Noto Serif SC', 'SimSun', serif;
+  --sans: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+}
+
+/* ========== Reset & Base ========== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: var(--nav-height); }
+body {
+  font-family: var(--sans);
+  color: var(--text-body);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+a { color: var(--blue-accent); text-decoration: none; transition: color .2s; }
+a:hover { color: var(--yellow-warm); }
+img { max-width: 100%; display: block; }
+
+/* ========== Navigation ========== */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: var(--nav-height);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 clamp(1.5rem, 5vw, 4rem);
+  transition: background .4s, box-shadow .4s;
+}
+.nav.scrolled {
+  background: rgba(232, 244, 253, 0.82);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 1px 12px rgba(26,42,58,.06);
+}
+.nav-logo {
+  font-family: var(--serif);
+  font-size: 1.25rem; font-weight: 700; color: var(--text-dark);
+  letter-spacing: .02em;
+}
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a {
+  font-size: .875rem; color: var(--text-body);
+  position: relative; padding-bottom: 2px;
+}
+.nav-links a::after {
+  content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px;
+  background: var(--blue-accent); transition: width .3s;
+}
+.nav-links a:hover::after { width: 100%; }
+
+/* Hamburger */
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+.hamburger span { width: 22px; height: 2px; background: var(--text-dark); transition: transform .3s, opacity .3s; }
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ========== Section Utilities ========== */
+.section { padding: 5rem clamp(1.5rem, 5vw, 4rem); position: relative; }
+.section-inner { max-width: 1080px; margin: 0 auto; }
+.section-title {
+  font-family: var(--serif);
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  color: var(--text-dark);
+  margin-bottom: .5rem;
+}
+.section-subtitle {
+  font-size: .95rem; color: var(--text-muted);
+  margin-bottom: 3rem; letter-spacing: .04em;
+}
+
+/* ========== Wave Dividers ========== */
+.wave-divider { width: 100%; line-height: 0; overflow: hidden; }
+.wave-divider svg { width: 100%; height: 48px; display: block; }
+
+/* ========== Hero ========== */
+.hero {
+  min-height: 100vh; display: flex; align-items: center;
+  padding: calc(var(--nav-height) + 2rem) clamp(1.5rem, 5vw, 4rem) 4rem;
+  background:
+    radial-gradient(circle at 20% 50%, rgba(74,144,217,.07) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(212,168,67,.05) 0%, transparent 40%),
+    linear-gradient(180deg, var(--blue-light) 0%, #F0F7FC 100%);
+  position: relative; overflow: hidden;
+}
+/* subtle grid */
+.hero::before {
+  content: ''; position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(74,144,217,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(74,144,217,.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+}
+.hero-inner {
+  max-width: 1080px; margin: 0 auto; width: 100%;
+  display: grid; grid-template-columns: 1fr auto; gap: 3rem; align-items: center;
+  position: relative; z-index: 1;
+}
+.hero-text { max-width: 640px; }
+.hero-greeting {
+  font-size: .95rem; color: var(--text-muted);
+  letter-spacing: .1em; text-transform: uppercase; margin-bottom: .75rem;
+  opacity: 0; animation: fadeSlideUp .7s ease forwards;
+}
+.hero-name {
+  font-family: var(--serif);
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  color: var(--text-dark);
+  line-height: 1.15; margin-bottom: 1rem;
+  opacity: 0; animation: fadeSlideUp .7s ease .15s forwards;
+}
+.hero-role {
+  font-size: clamp(1rem, 2.2vw, 1.25rem);
+  color: var(--blue-accent); font-weight: 500;
+  margin-bottom: 1.5rem;
+  opacity: 0; animation: fadeSlideUp .7s ease .3s forwards;
+}
+.hero-desc {
+  font-size: .95rem; line-height: 1.85; color: var(--text-body);
+  margin-bottom: 2rem;
+  opacity: 0; animation: fadeSlideUp .7s ease .45s forwards;
+}
+.hero-contact {
+  display: flex; flex-wrap: wrap; gap: 1rem;
+  opacity: 0; animation: fadeSlideUp .7s ease .6s forwards;
+}
+.hero-contact a {
+  display: inline-flex; align-items: center; gap: .4rem;
+  font-size: .85rem; color: var(--text-muted);
+  padding: .45rem 1rem; border-radius: 999px;
+  border: 1px solid rgba(74,144,217,.2);
+  transition: all .25s;
+}
+.hero-contact a:hover {
+  background: var(--blue-accent); color: #fff; border-color: var(--blue-accent);
+}
+.hero-avatar {
+  width: 140px; height: 140px; border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid rgba(255,255,255,.8);
+  box-shadow: 0 8px 32px rgba(74,144,217,.15);
+  opacity: 0; animation: fadeScale .7s ease .4s forwards;
+}
+
+/* ========== Education ========== */
+.bg-yellow { background: var(--yellow-light); }
+.bg-blue { background: var(--blue-light); }
+.timeline { position: relative; padding-left: 2rem; }
+.timeline::before {
+  content: ''; position: absolute; left: 7px; top: 8px; bottom: 8px;
+  width: 2px; background: linear-gradient(180deg, var(--blue-accent), rgba(74,144,217,.15));
+}
+.timeline-item {
+  position: relative; margin-bottom: 2.5rem;
+  opacity: 0; transform: translateY(24px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+.timeline-item.visible { opacity: 1; transform: translateY(0); }
+.timeline-dot {
+  position: absolute; left: -2rem; top: 6px;
+  width: 16px; height: 16px; border-radius: 50%;
+  background: var(--card-bg); border: 3px solid var(--blue-accent);
+  transition: background .3s;
+}
+.timeline-item.visible .timeline-dot { background: var(--blue-accent); }
+.timeline-year {
+  font-size: .8rem; color: var(--blue-accent); font-weight: 700;
+  letter-spacing: .04em; margin-bottom: .25rem;
+}
+.timeline-card {
+  background: var(--card-bg); border-radius: 12px;
+  padding: 1.5rem 1.75rem;
+  box-shadow: 0 2px 16px rgba(26,42,58,.05);
+}
+.timeline-card h3 {
+  font-size: 1.1rem; color: var(--text-dark); margin-bottom: .25rem;
+}
+.timeline-card .school-en {
+  font-size: .8rem; color: var(--text-muted); margin-bottom: .5rem;
+}
+.timeline-card p { font-size: .9rem; color: var(--text-body); }
+
+/* ========== Awards ========== */
+.awards-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.25rem;
+}
+.award-card {
+  background: var(--card-bg); border-radius: 12px;
+  padding: 1.4rem 1.5rem;
+  box-shadow: 0 2px 12px rgba(26,42,58,.04);
+  display: flex; align-items: flex-start; gap: 1rem;
+  transition: transform .3s, box-shadow .3s;
+  opacity: 0; transform: translateY(24px);
+}
+.award-card.visible { opacity: 1; transform: translateY(0); }
+.award-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(26,42,58,.1); }
+.award-year {
+  flex-shrink: 0; font-size: .75rem; font-weight: 700;
+  color: var(--yellow-warm); background: rgba(212,168,67,.1);
+  padding: .25rem .6rem; border-radius: 6px;
+  min-width: 44px; text-align: center;
+}
+.award-card h4 { font-size: .92rem; color: var(--text-dark); line-height: 1.5; }
+
+/* ========== Projects ========== */
+.project-card {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem;
+  align-items: center;
+  background: var(--card-bg); border-radius: 16px;
+  padding: 2rem; margin-bottom: 2.5rem;
+  box-shadow: 0 2px 20px rgba(26,42,58,.05);
+  opacity: 0; transform: translateY(32px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+.project-card.visible { opacity: 1; transform: translateY(0); }
+.project-card:nth-child(even) .project-media { order: 2; }
+.project-card:nth-child(even) .project-info { order: 1; }
+.project-media video {
+  width: 100%; border-radius: 10px;
+  background: #000;
+}
+.project-media .no-video {
+  width: 100%; aspect-ratio: 16/9; border-radius: 10px;
+  background: linear-gradient(135deg, var(--blue-light), var(--yellow-light));
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-muted); font-size: .9rem;
+}
+.project-info h3 {
+  font-family: var(--serif);
+  font-size: 1.35rem; color: var(--text-dark); margin-bottom: .5rem;
+}
+.project-meta {
+  display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1rem;
+}
+.project-meta .year-tag {
+  font-size: .75rem; font-weight: 700; color: var(--blue-accent);
+  background: rgba(74,144,217,.08); padding: .2rem .65rem; border-radius: 6px;
+}
+.project-meta .tech-tag {
+  font-size: .75rem; color: var(--text-muted);
+  background: rgba(26,42,58,.04); padding: .2rem .65rem; border-radius: 6px;
+}
+.project-info p {
+  font-size: .9rem; line-height: 1.8; color: var(--text-body); margin-bottom: .25rem;
+}
+.project-info ul {
+  list-style: none; padding: 0;
+}
+.project-info ul li {
+  font-size: .88rem; color: var(--text-body); line-height: 1.8;
+  padding-left: 1.1em; position: relative;
+}
+.project-info ul li::before {
+  content: ''; position: absolute; left: 0; top: .65em;
+  width: 5px; height: 5px; border-radius: 50%; background: var(--blue-accent);
+}
+.project-link {
+  display: inline-flex; align-items: center; gap: .3rem;
+  margin-top: .75rem; font-size: .85rem; font-weight: 500;
+}
+
+/* ========== Footer ========== */
+.footer {
+  background: var(--footer-bg); color: rgba(255,255,255,.7);
+  text-align: center; padding: 3rem 1.5rem 2rem;
+}
+.footer-contacts {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.footer-contacts span { font-size: .9rem; }
+.footer-line {
+  font-size: .8rem; color: rgba(255,255,255,.35);
+}
+
+/* ========== Animations ========== */
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeScale {
+  from { opacity: 0; transform: scale(.85); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* ========== Responsive ========== */
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .nav-links.open {
+    display: flex; flex-direction: column;
+    position: absolute; top: var(--nav-height); right: 0;
+    background: rgba(232,244,253,.96); backdrop-filter: blur(12px);
+    padding: 1.5rem 2rem; border-radius: 0 0 0 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,.08);
+    gap: 1rem;
+  }
+  .hamburger { display: flex; }
+  .hero-inner { grid-template-columns: 1fr; text-align: center; }
+  .hero-avatar { margin: 0 auto 1.5rem; order: -1; width: 110px; height: 110px; }
+  .hero-contact { justify-content: center; }
+  .project-card { grid-template-columns: 1fr; }
+  .project-card:nth-child(even) .project-media { order: 0; }
+  .project-card:nth-child(even) .project-info { order: 0; }
+  .awards-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== Navigation ===== -->
+<nav class="nav" id="nav">
+  <span class="nav-logo">Xinrui Zhao</span>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#about">About</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#awards">Awards</a></li>
+    <li><a href="#projects">Projects</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ===== Hero ===== -->
+<section class="hero" id="about">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <p class="hero-greeting">Hello, I'm</p>
+      <h1 class="hero-name">赵鑫瑞<br><span style="font-size:.45em;color:var(--text-muted);font-family:var(--sans);font-weight:400;">Zhao Xinrui</span></h1>
+      <p class="hero-role">Computer Vision & Full-Stack Developer</p>
+      <p class="hero-desc">
+        在计算机视觉、深度学习与全栈开发等领域积累了扎实的技术能力。研究生阶段围绕野生动物行为识别课题，独立完成了从姿态估计到动作分类的完整技术链路；独立设计并上线了 AI 塔罗牌占卜平台，积累了从 Prompt Engineering 到产品运营的全流程经验。
+      </p>
+      <div class="hero-contact">
+        <a href="mailto:zxr99777@gmail.com">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 4 10 8 10-8"/></svg>
+          zxr99777@gmail.com
+        </a>
+        <a href="tel:17630260997">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          176-3026-0997
+        </a>
+        <a href="#about">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Israel, Be'er Sheva
+        </a>
+      </div>
+    </div>
+    <img class="hero-avatar" src="照片.jpg" alt="赵鑫瑞" />
+  </div>
+</section>
+
+<!-- Wave: blue → yellow -->
+<div class="wave-divider" style="background:var(--blue-light);">
+  <svg viewBox="0 0 1440 48" preserveAspectRatio="none"><path fill="var(--yellow-light)" d="M0 48h1440V24C1200 0 960 48 720 36S240 0 0 24z"/></svg>
+</div>
+
+<!-- ===== Education ===== -->
+<section class="section bg-yellow" id="education">
+  <div class="section-inner">
+    <h2 class="section-title">Education</h2>
+    <p class="section-subtitle">教育经历</p>
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <span class="timeline-year">2024 — Present</span>
+        <div class="timeline-card">
+          <h3>以色列本古里安大学 — 研究生</h3>
+          <p class="school-en">Ben-Gurion University of the Negev &middot; Faculty of Engineering Sciences</p>
+          <p>机械电子工程方向。研究课题：基于狼的姿态估计和动作识别，针对以色列营地人与食肉动物冲突问题，利用 YOLOv8-Pose 与 Transformer 构建完整行为识别系统。</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <span class="timeline-year">2020 — 2024</span>
+        <div class="timeline-card">
+          <h3>常州大学 — 本科</h3>
+          <p class="school-en">Changzhou University &middot; 机器人产业学院 &middot; 计算机科学与技术</p>
+          <p>学习计算机专业方向课程，以及计算机传统视觉、机器视觉等有关的实践。华罗庚学院特等奖学金获得者。</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Wave: yellow → blue -->
+<div class="wave-divider" style="background:var(--yellow-light);">
+  <svg viewBox="0 0 1440 48" preserveAspectRatio="none"><path fill="var(--blue-light)" d="M0 0h1440v24C1200 48 960 0 720 12S240 48 0 24z"/></svg>
+</div>
+
+<!-- ===== Awards ===== -->
+<section class="section bg-blue" id="awards">
+  <div class="section-inner">
+    <h2 class="section-title">Awards</h2>
+    <p class="section-subtitle">荣誉奖项</p>
+    <div class="awards-grid">
+
+      <div class="award-card">
+        <span class="award-year">2026</span>
+        <h4>中国以色列友好交流奖学金</h4>
+      </div>
+      <div class="award-card">
+        <span class="award-year">2024</span>
+        <h4>中国以色列创新园与常州大学 以色列硕士全额奖学金</h4>
+      </div>
+      <div class="award-card">
+        <span class="award-year">2023</span>
+        <h4>中国机器人及人工智能大赛 全国二等奖</h4>
+      </div>
+      <div class="award-card">
+        <span class="award-year">2022</span>
+        <h4>中国大学生机械工程创意大赛 物流技术(起重机) 全国一等奖</h4>
+      </div>
+      <div class="award-card">
+        <span class="award-year">2022</span>
+        <h4>机器人产业学院 一等奖学金</h4>
+      </div>
+      <div class="award-card">
+        <span class="award-year">2022</span>
+        <h4>机器人产业学院 "院优秀干部"</h4>
+      </div>
+      <div class="award-card">
+        <span class="award-year">2021</span>
+        <h4>全国大学生电子设计竞赛 全国二等奖</h4>
+      </div>
+      <div class="award-card">
+        <span class="award-year">2021</span>
+        <h4>华罗庚学院 机器人产业学院 特等奖学金</h4>
+      </div>
+      <div class="award-card">
+        <span class="award-year">2021</span>
+        <h4>常州大学 "校三好学生" / "学习标兵"</h4>
+      </div>
+      <div class="award-card">
+        <span class="award-year">2020</span>
+        <h4>常州大学校红色运动会 校一等奖</h4>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Wave: blue → yellow -->
+<div class="wave-divider" style="background:var(--blue-light);">
+  <svg viewBox="0 0 1440 48" preserveAspectRatio="none"><path fill="var(--yellow-light)" d="M0 48h1440V24C1200 0 960 48 720 36S240 0 0 24z"/></svg>
+</div>
+
+<!-- ===== Projects ===== -->
+<section class="section bg-yellow" id="projects">
+  <div class="section-inner">
+    <h2 class="section-title">Projects</h2>
+    <p class="section-subtitle">项目经历</p>
+
+    <!-- Project 1 -->
+    <div class="project-card">
+      <div class="project-media">
+        <video controls preload="metadata" playsinline>
+          <source src="2026aitarot.mp4#t=0.5" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+      <div class="project-info">
+        <h3>AI 塔罗牌占卜网站</h3>
+        <div class="project-meta">
+          <span class="year-tag">2026</span>
+          <span class="tech-tag">Vue / Nuxt 3</span>
+          <span class="tech-tag">LLM</span>
+          <span class="tech-tag">全栈开发</span>
+        </div>
+        <ul>
+          <li>基于大语言模型 (LLM) 的 Prompt Engineering，设计多层提示词系统</li>
+          <li>采用 Vue/Nuxt 3 框架进行前端开发，实现 3D 卡牌翻转动画</li>
+        </ul>
+        <a class="project-link" href="https://mystartarot.xyz" target="_blank" rel="noopener">
+          mystartarot.xyz
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Project 2 -->
+    <div class="project-card">
+      <div class="project-media">
+        <div class="no-video">
+          <span>Research in Progress</span>
+        </div>
+      </div>
+      <div class="project-info">
+        <h3>基于骨骼姿态估计的狼行为识别系统</h3>
+        <div class="project-meta">
+          <span class="year-tag">2024 — Present</span>
+          <span class="tech-tag">YOLOv8-Pose</span>
+          <span class="tech-tag">Transformer</span>
+          <span class="tech-tag">迁移学习</span>
+        </div>
+        <ul>
+          <li>YOLOv8-Pose 模型，两阶段迁移学习策略，mAP50 达 0.994</li>
+          <li>基于 Transformer 编码器的时序动作识别模型（4 层、8 头注意力机制）</li>
+          <li>针对以色列营地人与食肉动物冲突问题</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Project 3 -->
+    <div class="project-card">
+      <div class="project-media">
+        <video controls preload="metadata" playsinline>
+          <source src="2024毕设智能飞镖_compressed.mp4#t=0.5" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+      <div class="project-info">
+        <h3>毕设 - 基于可见光视觉的智能飞镖</h3>
+        <div class="project-meta">
+          <span class="year-tag">2024</span>
+          <span class="tech-tag">YOLOv8</span>
+          <span class="tech-tag">卡尔曼滤波</span>
+          <span class="tech-tag">嵌入式</span>
+        </div>
+        <ul>
+          <li>YOLOv8 目标检测算法，嵌入式设备上实时高精度目标检测</li>
+          <li>卡尔曼滤波融合，视觉定位与滤波算法结合</li>
+          <li>嵌入式部署优化，部署到 Maix3 开发板</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Project 4 -->
+    <div class="project-card">
+      <div class="project-media">
+        <video controls preload="metadata" playsinline>
+          <source src="2022起重机比赛视频_compressed.mp4#t=0.5" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+      <div class="project-info">
+        <h3>中国大学生机械工程创意大赛 - 起重机</h3>
+        <div class="project-meta">
+          <span class="year-tag">2022</span>
+          <span class="tech-tag">机器视觉</span>
+          <span class="tech-tag">模型训练</span>
+        </div>
+        <ul>
+          <li>模型训练识别牛奶箱摆放不同状态</li>
+          <li>机器视觉对位置特征进行稳定识别</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Project 5 -->
+    <div class="project-card">
+      <div class="project-media">
+        <video controls preload="metadata" playsinline>
+          <source src="2021电赛测试视频_compressed.mp4#t=0.5" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+      <div class="project-info">
+        <h3>全国大学生电子设计竞赛</h3>
+        <div class="project-meta">
+          <span class="year-tag">2021</span>
+          <span class="tech-tag">OpenMV</span>
+          <span class="tech-tag">单片机</span>
+          <span class="tech-tag">视觉负责人</span>
+        </div>
+        <ul>
+          <li>模型训练对不同数字集特征点提取</li>
+          <li>利用 OpenMV 红色循迹线处理与单片机通讯</li>
+          <li>智能送药小车项目</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Wave: yellow → footer -->
+<div class="wave-divider" style="background:var(--yellow-light);">
+  <svg viewBox="0 0 1440 48" preserveAspectRatio="none"><path fill="var(--footer-bg)" d="M0 0h1440v24C1200 48 960 0 720 12S240 48 0 24z"/></svg>
+</div>
+
+<!-- ===== Footer ===== -->
+<footer class="footer">
+  <div class="footer-contacts">
+    <span>zxr99777@gmail.com</span>
+    <span>&middot;</span>
+    <span>176-3026-0997</span>
+    <span>&middot;</span>
+    <span>Israel, Be'er Sheva</span>
+  </div>
+  <p class="footer-line">&copy; 2026 赵鑫瑞 Zhao Xinrui</p>
+</footer>
+
+<script>
+/* Navbar scroll effect */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+}, { passive: true });
+
+/* Mobile menu */
+const hamburger = document.getElementById('hamburger');
+const navLinks = document.getElementById('navLinks');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  navLinks.classList.toggle('open');
+});
+navLinks.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => {
+    hamburger.classList.remove('open');
+    navLinks.classList.remove('open');
+  });
+});
+
+/* Only one video plays at a time */
+document.querySelectorAll('video').forEach(v => {
+  v.addEventListener('play', () => {
+    document.querySelectorAll('video').forEach(other => {
+      if (other !== v) other.pause();
+    });
+  });
+});
+
+/* Scroll-triggered animations */
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.timeline-item, .award-card, .project-card').forEach((el, i) => {
+  el.style.transitionDelay = `${(i % 6) * 0.08}s`;
+  observer.observe(el);
+});
+</script>
+</body>
+</html>
